@@ -52,7 +52,7 @@ public class Newton {
     public static void main(String[] args) {
 
         // Build the Newton's Approximation problem to be solved: cos(x) = x
-        Newton newton = new Newton("sec(x) - 1", (double x) -> (1 / Math.cos(x) - x), (double x) -> (((1 / Math.cos(x)) * Math.tan(x)) - 1));
+        Newton newton = new Newton("sec(x) - 3x", (double x) -> (1 / Math.cos(x) - x), (double x) -> (((1 / Math.cos(x)) * Math.tan(x)) - 3));
 
         // Solve the problem starting with a value of x = 1;
         // requiring a precision of 10^-7;

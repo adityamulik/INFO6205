@@ -111,10 +111,14 @@ public class TimerTest {
     public void testRepeat2() {
         final Timer timer = new Timer();
         final int zzz = 20;
-        final double mean = timer.repeat(10, () -> zzz, t -> {
-            GoToSleep(t, 0);
-            return null;
-        });
+        final double mean = timer.repeat(
+                10,
+                () -> zzz,
+                t -> {
+                    GoToSleep(t, 0);
+                    return null;
+                }
+        );
         assertEquals(10, new PrivateMethodTester(timer).invokePrivate("getLaps"));
         assertEquals(zzz, mean, 8.5);
         assertEquals(10, run);
@@ -126,13 +130,19 @@ public class TimerTest {
     public void testRepeat3() {
         final Timer timer = new Timer();
         final int zzz = 20;
-        final double mean = timer.repeat(10, () -> zzz, t -> {
-            GoToSleep(t, 0);
-            return null;
-        }, t -> {
-            GoToSleep(t, -1);
-            return t;
-        }, t -> GoToSleep(10, 1));
+        final double mean = timer.repeat(
+                10,
+                () -> zzz,
+                t -> {
+                    GoToSleep(t, 0);
+                    return null;
+                },
+                t -> {
+                    GoToSleep(t, -1);
+                    return t;
+                },
+                t -> GoToSleep(10, 1)
+        );
         assertEquals(10, new PrivateMethodTester(timer).invokePrivate("getLaps"));
         assertEquals(zzz, mean, 6);
         assertEquals(10, run);

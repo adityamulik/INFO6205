@@ -20,9 +20,8 @@ public class RandomWalk {
      * @param dy the distance he moves in the y direction
      */
     private void move(int dx, int dy) {
-        // FIXME do move by replacing the following code
-         throw new RuntimeException("Not implemented");
-        // END 
+        x += dx;
+        y += dy;
     }
 
     /**
@@ -31,8 +30,9 @@ public class RandomWalk {
      * @param m the number of steps the drunkard takes
      */
     private void randomWalk(int m) {
-        // FIXME
-        // END 
+        for (int i=0; i<m; i++) {
+            randomMove();
+        }
     }
 
     /**
@@ -41,7 +41,9 @@ public class RandomWalk {
      */
     private void randomMove() {
         boolean ns = random.nextBoolean();
+//        System.out.println("NS " + ns);
         int step = random.nextBoolean() ? 1 : -1;
+//        System.out.println("STEP " + step);
         move(ns ? step : 0, ns ? 0 : step);
     }
 
@@ -51,9 +53,10 @@ public class RandomWalk {
      * @return the (Euclidean) distance from the origin to the current position.
      */
     public double distance() {
-        // FIXME
-        // END
-        return 0;
+        // Euclidean distance calculated from the lamp post to the point of distance (d)
+        double result = Math.sqrt(Math.pow((y-0), 2) + Math.pow((x-0), 2));
+//        System.out.println("Distance " + result);
+        return result;
     }
 
     /**
@@ -65,22 +68,28 @@ public class RandomWalk {
      */
     public static double randomWalkMulti(int m, int n) {
         double totalDistance = 0;
+
         for (int i = 0; i < n; i++) {
             RandomWalk walk = new RandomWalk();
             walk.randomWalk(m);
             totalDistance = totalDistance + walk.distance();
         }
+
+//        System.out.println("For m: " + m + " Square root of m(steps) " + Math.sqrt(m) + " steps & Distance " + totalDistance / n + " n " + n);
+
         return totalDistance / n;
     }
 
     public static void main(String[] args) {
-        if (args.length == 0)
-            throw new RuntimeException("Syntax: RandomWalk steps [experiments]");
-        int m = Integer.parseInt(args[0]);
-        int n = 30;
-        if (args.length > 1) n = Integer.parseInt(args[1]);
-        double meanDistance = randomWalkMulti(m, n);
-        System.out.println(m + " steps: " + meanDistance + " over " + n + " experiments");
+
+        int[] steps = {5, 10, 15, 20, 25, 30}; // 6 values of no of steps
+
+        for (int m: steps) {
+            int n = 10;
+            if (args.length > 1) n = Integer.parseInt(args[1]);
+            double meanDistance = randomWalkMulti(m, n);
+            System.out.println(m + " steps: " + meanDistance + " over " + n + " experiments");
+        }
     }
 
 }
