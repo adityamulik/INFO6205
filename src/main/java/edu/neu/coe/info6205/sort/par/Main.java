@@ -20,10 +20,19 @@ public class Main {
         processArgs(args);
         System.out.println("Degree of parallelism: " + ForkJoinPool.getCommonPoolParallelism());
         Random random = new Random();
-        int[] array = new int[2000000];
+
+        // Custom Array input
+        int[] array = new int[3000000];
+        System.out.println("The length of array is: " + array.length);
         ArrayList<Long> timeList = new ArrayList<>();
-        for (int j = 50; j < 100; j++) {
-            ParSort.cutoff = 10000 * (j + 1);
+
+        // Manually setting the threads from 2 to 32
+        int threads = (int) Math.pow(2, 3);
+        ParSort.customPool = new ForkJoinPool(threads);
+        System.out.println("The number of threads is: " + threads);
+
+        for (int j = 1; j < 110; j++) {
+            ParSort.cutoff = array.length / 200 * (j + 1);
             // for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000000);
             long time;
             long startTime = System.currentTimeMillis();
@@ -36,7 +45,7 @@ public class Main {
             timeList.add(time);
 
 
-            System.out.println("cutoff：" + (ParSort.cutoff) + "\t\t10times Time:" + time + "ms");
+            System.out.println("Cutoff: " + (ParSort.cutoff) + "\t\t10times Time:" + time + "ms");
 
         }
         try {
